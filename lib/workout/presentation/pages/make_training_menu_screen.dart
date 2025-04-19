@@ -1,100 +1,126 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:train_menu_creator/workout/presentation/controller/training_creation_controller.dart';
+import 'package:train_menu_creator/workout/domain/constants/make_training_questions_constants.dart';
+import 'package:train_menu_creator/workout/domain/enums/train_part_enum.dart';
 
-class TodayMenuQuestionPage extends HookConsumerWidget {
-  final String selectedBodyParts;
+class QuestionPage extends HookConsumerWidget {
+  const QuestionPage({super.key, required this.trainPart});
 
-  const TodayMenuQuestionPage({super.key, required this.selectedBodyParts});
+  final TrainPart trainPart;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(todayMenuQuestionControllerProvider);
+    final currentIndex = useState(0);
+    final pageController = usePageController();
+
+    final answers = <String>[];
+
+    void nextPage(String answer) {
+      answers.add(answer);
+      if (currentIndex.value < questionsAndAnswers.length - 1) {
+        currentIndex.value += 1;
+        pageController.nextPage(
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+      } else {
+        // 全質問完了時の処理
+        debugPrint('全回答: $answers');
+      }
+    }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('本日のトレーニング条件')),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: ListView(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Column(
           children: [
-            _buildSelectedParts(),
-            const SizedBox(height: 16),
-            _buildDropdown<String>(
-              label: '使用できる器具は？',
-              value: controller.equipment,
-              items: ['自重のみ', 'ダンベルあり', 'ジム設備あり'],
-              onChanged: controller.setEquipment,
+            // 🔵 上部インジケーター
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: LinearProgressIndicator(
+                  color: Colors.orange,
+                  minHeight: 10,
+                  value: (currentIndex.value + 1) / questionsAndAnswers.length,
+                ),
+              ),
             ),
-            const SizedBox(height: 16),
-            _buildDropdown<int>(
-              label: 'トレーニングに使える時間は？',
-              value: controller.duration,
-              items: [15, 30, 45, 60],
-              display: (v) => '$v 分',
-              onChanged: controller.setDuration,
-            ),
-            const SizedBox(height: 16),
-            _buildDropdown<String>(
-              label: '今日の体調・疲労感は？',
-              value: controller.fatigue,
-              items: ['絶好調', '普通', '少し疲れている', 'かなり疲れている'],
-              onChanged: controller.setFatigue,
-            ),
-            const SizedBox(height: 16),
-            _buildDropdown<String>(
-              label: 'トレーニング経験レベルは？',
-              value: controller.level,
-              items: ['初心者', '中級者', '上級者'],
-              onChanged: controller.setLevel,
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: controller.isValid
-                  ? () {
-                // 実際の生成ロジックはコントローラに任せる or 遷移など
-                controller.generateMenu(selectedBodyParts);
-              }
-                  : null,
-              child: const Text('メニューを生成する'),
+            Expanded(
+              child: PageView.builder(
+                controller: pageController,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: questionsAndAnswers.length,
+                itemBuilder: (context, index) {
+                  final isCurrent = index == currentIndex.value;
+
+                  return AnimatedOpacity(
+                    opacity: isCurrent ? 1.0 : 0.0,
+                    duration: const Duration(milliseconds: 300),
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Spacer(),
+                          Text(
+                            '質問 ${index + 1} / ${questionsAndAnswers.length}',
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                          const SizedBox(height: 16),
+                          Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24),
+                            ),
+                            elevation: 6,
+                            child: Padding(
+                              padding: const EdgeInsets.all(32),
+                              child: Text(
+                                questionsAndAnswers[index].question,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(fontSize: 24),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 32),
+                          Wrap(
+                            spacing: 12,
+                            runSpacing: 12,
+                            alignment: WrapAlignment.center,
+                            children: questionsAndAnswers[index].answers.map((e)=> _AnswerButton(text: e, onTap: () => nextPage(e))).toList(),
+                          ),
+                          const Spacer(),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
       ),
     );
   }
+}
 
-  Widget _buildSelectedParts() {
-    return Wrap(
-      spacing: 8,
-      runSpacing: 4,
-      children:[Chip(label: Text(selectedBodyParts))],
-    );
-  }
+class _AnswerButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onTap;
 
-  Widget _buildDropdown<T>({
-    required String label,
-    required T? value,
-    required List<T> items,
-    String Function(T)? display,
-    required void Function(T?) onChanged,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label, style: const TextStyle(fontSize: 16)),
-        DropdownButton<T>(
-          isExpanded: true,
-          value: value,
-          hint: const Text('選択してください'),
-          items: items
-              .map((e) => DropdownMenuItem<T>(
-            value: e,
-            child: Text(display?.call(e) ?? e.toString()),
-          ))
-              .toList(),
-          onChanged: onChanged,
-        ),
-      ],
+  const _AnswerButton({required this.text, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onTap,
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        elevation: 4,
+      ),
+      child: Text(text, style: const TextStyle(fontSize: 16)),
     );
   }
 }

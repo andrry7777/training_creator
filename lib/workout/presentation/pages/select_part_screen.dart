@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart' show AppBar, BuildContext, Center, Column, CrossAxisAlignment, MainAxisAlignment, Scaffold, StatelessWidget, Text, Theme, Widget;
+import 'package:flutter/material.dart';
+import 'package:train_menu_creator/workout/domain/enums/train_part_enum.dart';
 import 'package:train_menu_creator/workout/presentation/widgets/train_option_button.dart';
 
 class SelectPartScreen extends StatelessWidget {
@@ -16,11 +17,11 @@ class SelectPartScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ThemedTextButton(text: '胸', onPressed: () {}),
-            ThemedTextButton(text: '肩', onPressed: () {}),
-            ThemedTextButton(text: '足', onPressed: () {}),
-            ThemedTextButton(text: '背中', onPressed: () {}),
-            ThemedTextButton(text: '腕', onPressed: () {}),
+            SelectTrainPartButton(text: '胸', trainPart: TrainPart.chest),
+            SelectTrainPartButton(text: '肩', trainPart: TrainPart.shoulder),
+            SelectTrainPartButton(text: '足', trainPart: TrainPart.legs),
+            SelectTrainPartButton(text: '背中', trainPart: TrainPart.back),
+            SelectTrainPartButton(text: '腕',trainPart: TrainPart.arms),
           ],
         ),
       ),
