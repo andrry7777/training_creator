@@ -31,7 +31,7 @@ class QuestionPage extends HookConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      appBar: AppBar(leading: GestureDetector()),
       body: SafeArea(
         child: Column(
           children: [
@@ -88,7 +88,15 @@ class QuestionPage extends HookConsumerWidget {
                             spacing: 12,
                             runSpacing: 12,
                             alignment: WrapAlignment.center,
-                            children: questionsAndAnswers[index].answers.map((e)=> _AnswerButton(text: e, onTap: () => nextPage(e))).toList(),
+                            children:
+                                questionsAndAnswers[index].answers
+                                    .map(
+                                      (answer) => _AnswerButton(
+                                        text: answer,
+                                        onTap: () => nextPage(answer),
+                                      ),
+                                    )
+                                    .toList(),
                           ),
                           const Spacer(),
                         ],

@@ -19,6 +19,7 @@ dependencies:
   flutter_hooks: ^0.21.2
   hooks_riverpod: ^2.6.1
   freezed_annotation: ^2.4.1
+  dotenv: ^4.2.0
 
 dev_dependencies:
   flutter_test:
