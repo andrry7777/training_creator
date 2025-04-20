@@ -1,4 +1,5 @@
-import 'package:train_menu_creator/workout/domain/models/create_training_question_and_answers.dart';
+
+import 'package:train_menu_creator/workout/domain/entity/create_training_question_and_answers.dart';
 
 const questionsAndAnswers = [
   CreateTrainingQuestionAndAnswers(
