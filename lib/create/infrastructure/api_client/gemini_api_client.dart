@@ -1,14 +1,22 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:train_menu_creator/workout/infrastructure/model/GeminiResponse.dart';
-import 'package:http/http.dart' as http show post;
+import 'package:http/http.dart' as http;
+import 'package:train_menu_creator/create/infrastructure/model/gemini_response.dart';
 
-class GeminiDataSource {
+final geminiApiClientProvider = Provider<GeminiApiClient>(
+  (ref) => GeminiApiClient(),
+);
+
+class GeminiApiClient {
   Future<GeminiResponseModel> fetchGeminiAnswer({
-    required Uri url,
     required String prompt,
   }) async {
+    final apiKey = dotenv.env['GEMINI_API_KEY'] ?? '';
+    final url = Uri.parse(
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$apiKey',
+    );
     final res = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -31,7 +39,3 @@ class GeminiDataSource {
     }
   }
 }
-
-final geminiDataSourceProvider = Provider<GeminiDataSource>((ref) {
-  return GeminiDataSource();
-});

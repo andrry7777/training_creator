@@ -1,5 +1,4 @@
-
-import 'package:train_menu_creator/workout/domain/entity/create_training_question_and_answers.dart';
+import 'package:train_menu_creator/create/domain/entity/create_training_question_and_answers.dart';
 
 const questionsAndAnswers = [
   CreateTrainingQuestionAndAnswers(
@@ -13,5 +12,5 @@ const questionsAndAnswers = [
   CreateTrainingQuestionAndAnswers(
     question: '今日のトレーニングはどの強度にしますか',
     answers: ['控えめ', '通常', '高強度'],
-  )
+  ),
 ];

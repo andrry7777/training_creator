@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:train_menu_creator/workout/domain/enums/train_part_enum.dart';
-import 'package:train_menu_creator/workout/presentation/widgets/train_option_button.dart';
+import 'package:train_menu_creator/create/domain/enums/train_part_enum.dart';
+import 'package:train_menu_creator/create/presentation/widgets/train_option_button.dart';
 
 class SelectPartScreen extends StatelessWidget {
   const SelectPartScreen({super.key});
@@ -21,7 +21,7 @@ class SelectPartScreen extends StatelessWidget {
             SelectTrainPartButton(text: '肩', trainPart: TrainPart.shoulder),
             SelectTrainPartButton(text: '足', trainPart: TrainPart.legs),
             SelectTrainPartButton(text: '背中', trainPart: TrainPart.back),
-            SelectTrainPartButton(text: '腕',trainPart: TrainPart.arms),
+            SelectTrainPartButton(text: '腕', trainPart: TrainPart.arms),
           ],
         ),
       ),
