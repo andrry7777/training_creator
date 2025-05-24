@@ -1,22 +1,27 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:train_menu_creator/create/domain/entity/training_menus.dart';
 import 'package:train_menu_creator/create/domain/enums/train_part_enum.dart';
+import 'package:train_menu_creator/create/domain/repositoryies/interface_create_menu_repository.dart';
 import 'package:train_menu_creator/create/infrastructure/repository/create_training_menu_repository_impl.dart';
 
-part 'create_training_menu_usecase.g.dart';
+final createTrainingMenuUseCaseProvider = Provider<CreateTrainingMenuUseCase>((
+  ref,
+) {
+  final repository = ref.read(trainingMenuRepositoryProvider);
+  return CreateTrainingMenuUseCase(repository: repository);
+});
 
-@riverpod
-class CreateTrainingMenuUseCase extends _$CreateTrainingMenuUseCase {
-  @override
-  AsyncValue<List<TrainingMenu>> build() => AsyncValue.data([]);
+class CreateTrainingMenuUseCase {
+  CreateTrainingMenuUseCase({required this.repository});
 
-  Future<void> createMenu({
+  final CreateMenuRepository repository;
+
+  Future<List<TrainingMenu>> createMenu({
     required TrainPart trainPart,
     required String trainTime,
     required String strength,
     required String fatigue,
   }) async {
-    final repository = ref.read(trainingMenuRepositoryProvider);
     final geminiResponse = await repository.createTrainingMenuByGemini(
       trainPart: trainPart,
       trainTime: trainTime,
@@ -27,6 +32,6 @@ class CreateTrainingMenuUseCase extends _$CreateTrainingMenuUseCase {
       geminiResponse.candidates[0].content.parts[0].text,
       trainPart,
     );
-    state = AsyncValue.data(trainingMenus);
+    return trainingMenus;
   }
 }

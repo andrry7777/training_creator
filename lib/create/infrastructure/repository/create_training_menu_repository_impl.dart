@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:train_menu_creator/create//infrastructure/api_client/gemini_api_client.dart';
 import 'package:train_menu_creator/create/domain/enums/train_part_enum.dart';
@@ -24,7 +25,7 @@ class TrainingMenuRepositoryImpl implements CreateMenuRepository {
     // TODO 年齢などの情報も受け取れる様にしておく
     final prompt = '''
 あなたは優秀なパーソナルトレーナーです。
-以下の条件に合った本日のトレーニングメニューを5種目程度、わかりやすく提案してください。
+以下の条件に合った本日のトレーニングメニューを提案してください。
 
 鍛えたい部位: ${trainPart.getStringName}
 強度：$strength
@@ -39,21 +40,21 @@ class TrainingMenuRepositoryImpl implements CreateMenuRepository {
 [
 {
  "menu": "トレーニングメニュー名",
- "rest": "休憩時間",
- "weight": "トレーニング重量",
- "reps": "トレーニング回数"
+ "rest": 休憩時間,
+ "weight": トレーニング重量,
+ "reps": トレーニング回数
 },
 {
  "menu": "トレーニングメニュー名",
- "rest": "休憩時間",
- "weight": "トレーニング重量",
- "reps": "トレーニング回数"
+ "rest": 休憩時間,
+ "weight": トレーニング重量,
+ "reps": トレーニング回数
 },
 {
  "menu": "トレーニングメニュー名",
- "rest": "休憩時間",
- "weight": "トレーニング重量",
- "reps": "トレーニング回数"
+ "rest": 休憩時間,
+ "weight": トレーニング重量,
+ "reps": トレーニング回数
 },
 ...
 ]
@@ -63,11 +64,13 @@ class TrainingMenuRepositoryImpl implements CreateMenuRepository {
 ・それぞれ文献などをもとに値を設定してください。
 ・改行文字は不要です。
 ・休憩時間は秒単位で記載してください。
-・数値を返却する項目に関して、単位は返却不要です
+・数値を返却する項目に関して、単位は返却不要です。また、整数で値を返却してください。
 ・同一トレーニングメニューを複数セット実施する際は複数個のオブジェクトに分けて記載してください
 ・上記形式を満たさない返却値は不要です
 ・最後のオブジェクトの末尾には,は不要です
 ''';
+    
+    debugPrint(prompt);
 
     final response = await geminiApiClient.fetchGeminiAnswer(prompt: prompt);
 

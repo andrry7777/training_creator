@@ -1,17 +1,10 @@
-enum TrainPart {
-  chest,
-  shoulder,
-  legs,
-  back,
-  arms,
-  other,
-}
+enum TrainPart { chest, shoulder, legs, back, arms, other }
 
 extension TrainPartExtension on TrainPart {
   String get getStringName {
-    switch(this) {
+    switch (this) {
       case TrainPart.chest:
-        return '腕';
+        return '胸';
       case TrainPart.shoulder:
         return '肩';
       case TrainPart.legs:

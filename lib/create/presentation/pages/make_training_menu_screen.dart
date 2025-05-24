@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:train_menu_creator/app/router/route_names.dart';
-import 'package:train_menu_creator/create/application/business_logics/create_training_menu_usecase.dart';
 import 'package:train_menu_creator/create/domain/constants/make_training_questions_constants.dart';
 import 'package:train_menu_creator/create/domain/enums/train_part_enum.dart';
 
@@ -23,15 +22,13 @@ class QuestionPage extends HookConsumerWidget {
       currentIndex.value += 1;
 
       if (currentIndex.value >= questionsAndAnswers.length) {
-        ref
-            .read(createTrainingMenuUseCaseProvider.notifier)
-            .createMenu(
-              trainPart: trainPart,
-              trainTime: answers.value[0],
-              strength: answers.value[1],
-              fatigue: answers.value[2],
-            );
-        context.go(RouteNames.workout);
+        final extra = {
+          'trainPart': trainPart,
+          'trainTime': answers.value[0],
+          'strength': answers.value[1],
+          'fatigue': answers.value[2],
+        };
+        context.go(RouteNames.workout, extra: extra);
       } else {
         pageController.nextPage(
           duration: const Duration(milliseconds: 500),

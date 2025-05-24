@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:train_menu_creator/create/domain/enums/train_part_enum.dart';
 
@@ -21,16 +22,14 @@ List<TrainingMenu> convertGeminiResponseToTrainingMenu(
   String geminiResponse,
   TrainPart trainPart,
 ) {
-  final regex = RegExp(r'\[([^\]]+)\]');
-  final match = regex.firstMatch(geminiResponse);
+  debugPrint(geminiResponse);
   // レスポンスから不要な文字列を削除
-  final cleaned =
-      match?.group(1) ??
-      ''
-          .replaceAll('\n', '')
-          .replaceAll(RegExp(r'\\?\"'), '"')
-          .replaceAll("'", '"');
-  final List<dynamic> jsonList = jsonDecode(cleaned);
+  final cleaned = geminiResponse
+      .replaceAll('\n', '')
+      .replaceAll(RegExp(r'\\?\"'), '"')
+      .replaceAll("'", '"');
+
+  final jsonList = jsonDecode(cleaned);
   return jsonList.map<TrainingMenu>((item) {
     final menu = item['menu'] as String?;
     final rest = item['rest'] as int?;

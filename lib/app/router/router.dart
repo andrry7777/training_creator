@@ -17,7 +17,19 @@ final myAppRouter = GoRouter(
     ),
     GoRoute(
       path: RouteNames.workout,
-      builder: (context, state) => const WorkoutScreen(),
+      builder: (context, state) {
+        final argsMap = state.extra as Map<String, dynamic>;
+        final trainPart = argsMap['trainPart'] as TrainPart;
+        final trainTime = argsMap['trainTime'] as String;
+        final strength = argsMap['strength'] as String;
+        final fatigue = argsMap['fatigue'] as String;
+        return WorkoutScreen(
+          trainPart: trainPart,
+          trainTime: trainTime,
+          strength: strength,
+          fatigue: fatigue,
+        );
+      },
     ),
   ],
 );

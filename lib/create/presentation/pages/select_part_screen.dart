@@ -8,21 +8,21 @@ class SelectPartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('目指せムキムキ'),
-      ),
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SelectTrainPartButton(text: '胸', trainPart: TrainPart.chest),
-            SelectTrainPartButton(text: '肩', trainPart: TrainPart.shoulder),
-            SelectTrainPartButton(text: '足', trainPart: TrainPart.legs),
-            SelectTrainPartButton(text: '背中', trainPart: TrainPart.back),
-            SelectTrainPartButton(text: '腕', trainPart: TrainPart.arms),
-          ],
+      appBar: AppBar(title: const Text('目指せムキムキ')),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 32),
+              SelectTrainPartButton(text: '胸', trainPart: TrainPart.chest),
+              SelectTrainPartButton(text: '肩', trainPart: TrainPart.shoulder),
+              SelectTrainPartButton(text: '足', trainPart: TrainPart.legs),
+              SelectTrainPartButton(text: '背中', trainPart: TrainPart.back),
+              SelectTrainPartButton(text: '腕', trainPart: TrainPart.arms),
+            ],
+          ),
         ),
       ),
     );
