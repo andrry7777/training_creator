@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:train_menu_creator/create//infrastructure/api_client/gemini_api_client.dart';
 import 'package:train_menu_creator/create/domain/enums/train_part_enum.dart';
@@ -69,8 +68,6 @@ class TrainingMenuRepositoryImpl implements CreateMenuRepository {
 ・上記形式を満たさない返却値は不要です
 ・最後のオブジェクトの末尾には,は不要です
 ''';
-    
-    debugPrint(prompt);
 
     final response = await geminiApiClient.fetchGeminiAnswer(prompt: prompt);
 

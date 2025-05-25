@@ -17,4 +17,21 @@ extension TrainPartExtension on TrainPart {
         return 'その他';
     }
   }
+
+  int get getTrainPartInt {
+    switch (this) {
+      case TrainPart.chest:
+        return 1;
+      case TrainPart.shoulder:
+        return 2;
+      case TrainPart.legs:
+        return 3;
+      case TrainPart.back:
+        return 4;
+      case TrainPart.arms:
+        return 5;
+      default:
+        return 6;
+    }
+  }
 }

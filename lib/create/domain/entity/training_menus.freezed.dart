@@ -22,6 +22,7 @@ mixin _$TrainingMenu {
   int get rest => throw _privateConstructorUsedError;
   int get weight => throw _privateConstructorUsedError;
   int get reps => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
 
   /// Create a copy of TrainingMenu
   /// with the given fields replaced by the non-null parameter values.
@@ -37,7 +38,14 @@ abstract class $TrainingMenuCopyWith<$Res> {
     $Res Function(TrainingMenu) then,
   ) = _$TrainingMenuCopyWithImpl<$Res, TrainingMenu>;
   @useResult
-  $Res call({TrainPart trainPart, String menu, int rest, int weight, int reps});
+  $Res call({
+    TrainPart trainPart,
+    String menu,
+    int rest,
+    int weight,
+    int reps,
+    String id,
+  });
 }
 
 /// @nodoc
@@ -60,6 +68,7 @@ class _$TrainingMenuCopyWithImpl<$Res, $Val extends TrainingMenu>
     Object? rest = null,
     Object? weight = null,
     Object? reps = null,
+    Object? id = null,
   }) {
     return _then(
       _value.copyWith(
@@ -88,6 +97,11 @@ class _$TrainingMenuCopyWithImpl<$Res, $Val extends TrainingMenu>
                     ? _value.reps
                     : reps // ignore: cast_nullable_to_non_nullable
                         as int,
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as String,
           )
           as $Val,
     );
@@ -103,7 +117,14 @@ abstract class _$$TrainingMenuImplCopyWith<$Res>
   ) = __$$TrainingMenuImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({TrainPart trainPart, String menu, int rest, int weight, int reps});
+  $Res call({
+    TrainPart trainPart,
+    String menu,
+    int rest,
+    int weight,
+    int reps,
+    String id,
+  });
 }
 
 /// @nodoc
@@ -125,6 +146,7 @@ class __$$TrainingMenuImplCopyWithImpl<$Res>
     Object? rest = null,
     Object? weight = null,
     Object? reps = null,
+    Object? id = null,
   }) {
     return _then(
       _$TrainingMenuImpl(
@@ -153,6 +175,11 @@ class __$$TrainingMenuImplCopyWithImpl<$Res>
                 ? _value.reps
                 : reps // ignore: cast_nullable_to_non_nullable
                     as int,
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as String,
       ),
     );
   }
@@ -161,12 +188,13 @@ class __$$TrainingMenuImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$TrainingMenuImpl implements _TrainingMenu {
-  const _$TrainingMenuImpl({
+  _$TrainingMenuImpl({
     required this.trainPart,
     required this.menu,
     required this.rest,
     required this.weight,
     required this.reps,
+    this.id = '',
   });
 
   @override
@@ -179,10 +207,13 @@ class _$TrainingMenuImpl implements _TrainingMenu {
   final int weight;
   @override
   final int reps;
+  @override
+  @JsonKey()
+  final String id;
 
   @override
   String toString() {
-    return 'TrainingMenu(trainPart: $trainPart, menu: $menu, rest: $rest, weight: $weight, reps: $reps)';
+    return 'TrainingMenu(trainPart: $trainPart, menu: $menu, rest: $rest, weight: $weight, reps: $reps, id: $id)';
   }
 
   @override
@@ -195,12 +226,13 @@ class _$TrainingMenuImpl implements _TrainingMenu {
             (identical(other.menu, menu) || other.menu == menu) &&
             (identical(other.rest, rest) || other.rest == rest) &&
             (identical(other.weight, weight) || other.weight == weight) &&
-            (identical(other.reps, reps) || other.reps == reps));
+            (identical(other.reps, reps) || other.reps == reps) &&
+            (identical(other.id, id) || other.id == id));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, trainPart, menu, rest, weight, reps);
+      Object.hash(runtimeType, trainPart, menu, rest, weight, reps, id);
 
   /// Create a copy of TrainingMenu
   /// with the given fields replaced by the non-null parameter values.
@@ -212,12 +244,13 @@ class _$TrainingMenuImpl implements _TrainingMenu {
 }
 
 abstract class _TrainingMenu implements TrainingMenu {
-  const factory _TrainingMenu({
+  factory _TrainingMenu({
     required final TrainPart trainPart,
     required final String menu,
     required final int rest,
     required final int weight,
     required final int reps,
+    final String id,
   }) = _$TrainingMenuImpl;
 
   @override
@@ -230,6 +263,8 @@ abstract class _TrainingMenu implements TrainingMenu {
   int get weight;
   @override
   int get reps;
+  @override
+  String get id;
 
   /// Create a copy of TrainingMenu
   /// with the given fields replaced by the non-null parameter values.

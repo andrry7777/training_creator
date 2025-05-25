@@ -22,7 +22,6 @@ class WorkoutScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(workOutViewModelProvider);
     final controller = ref.read(workOutViewModelProvider.notifier);
-    final completedMenus = useState<Set<int>>({});
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -87,18 +86,12 @@ class WorkoutScreen extends HookConsumerWidget {
                       itemCount: menus.length,
                       itemBuilder: (context, index) {
                         final menu = menus[index];
-                        final isCompleted = completedMenus.value.contains(
-                          index,
-                        );
 
                         return Dismissible(
                           key: ValueKey('${menu.menu}_$index'),
                           direction: DismissDirection.endToStart,
                           onDismissed: (_) {
-                            completedMenus.value = {
-                              ...completedMenus.value,
-                              index,
-                            };
+                            controller.setMenuAsDone(id: menu.id);
                           },
                           background: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -113,38 +106,35 @@ class WorkoutScreen extends HookConsumerWidget {
                               size: 28,
                             ),
                           ),
-                          child: Opacity(
-                            opacity: isCompleted ? 0.3 : 1.0,
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              margin: const EdgeInsets.symmetric(vertical: 8),
-                              elevation: 3,
-                              color: Colors.white,
-                              child: Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      menu.menu,
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black87,
-                                      ),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            margin: const EdgeInsets.symmetric(vertical: 8),
+                            elevation: 3,
+                            color: Colors.white,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    menu.menu,
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black87,
                                     ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      '重量: ${menu.weight}kg\n回数: ${menu.reps}回\n休憩: ${menu.rest}秒',
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.black54,
-                                      ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    '重量: ${menu.weight}kg\n回数: ${menu.reps}回\n休憩: ${menu.rest}秒',
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black54,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
