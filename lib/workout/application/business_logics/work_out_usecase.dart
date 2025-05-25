@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import 'package:train_menu_creator/create/domain/entity/training_menus.dart';
@@ -18,9 +17,6 @@ class WorkOutUseCase {
   }) {
     return trainingMenus.when(
       data: (menu) {
-        debugPrint(id);
-        debugPrint(menu.toString());
-
         final trainingOfDone = menu.firstWhere((e) => e.id == id);
 
         /// remove menu of done

@@ -88,7 +88,7 @@ class WorkoutScreen extends HookConsumerWidget {
                         final menu = menus[index];
 
                         return Dismissible(
-                          key: ValueKey('${menu.menu}_$index'),
+                          key: ValueKey('${menu.menu}_${menu.id}'),
                           direction: DismissDirection.endToStart,
                           onDismissed: (_) {
                             controller.setMenuAsDone(id: menu.id);
