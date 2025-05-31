@@ -33,7 +33,7 @@ class WorkOutViewModel extends StateNotifier<WorkOutScreenState> {
   final WorkOutUseCase workOutUseCase;
 
   void createMenu({
-    required TrainPart trainPart,
+    required List<TrainPart> trainPart,
     required String trainTime,
     required String strength,
     required String fatigue,

@@ -16,7 +16,7 @@ class TrainingMenuRepositoryImpl implements CreateMenuRepository {
 
   @override
   Future<GeminiResponseModel> createTrainingMenuByGemini({
-    required TrainPart trainPart,
+    required List<TrainPart> trainPart,
     required String trainTime,
     required String strength,
     required String fatigue,
@@ -26,7 +26,7 @@ class TrainingMenuRepositoryImpl implements CreateMenuRepository {
 あなたは優秀なパーソナルトレーナーです。
 以下の条件に合った本日のトレーニングメニューを提案してください。
 
-鍛えたい部位: ${trainPart.getStringName}
+鍛えたい部位: ${trainPart.map((e) => e.getStringName)}
 強度：$strength
 トレーニング時間：$trainTime
 コンディション：$fatigue
@@ -38,18 +38,21 @@ class TrainingMenuRepositoryImpl implements CreateMenuRepository {
 レスポンスの形式は  
 [
 {
+ "part": "トレーニング部位",
  "menu": "トレーニングメニュー名",
  "rest": 休憩時間,
  "weight": トレーニング重量,
  "reps": トレーニング回数
 },
 {
+ "part": "トレーニング部位",
  "menu": "トレーニングメニュー名",
  "rest": 休憩時間,
  "weight": トレーニング重量,
  "reps": トレーニング回数
 },
 {
+ "part": "トレーニング部位",
  "menu": "トレーニングメニュー名",
  "rest": 休憩時間,
  "weight": トレーニング重量,
@@ -67,6 +70,7 @@ class TrainingMenuRepositoryImpl implements CreateMenuRepository {
 ・同一トレーニングメニューを複数セット実施する際は複数個のオブジェクトに分けて記載してください
 ・上記形式を満たさない返却値は不要です
 ・最後のオブジェクトの末尾には,は不要です
+・トレーニング部位に関しては 胸, 肩, 脚, 背中, 腕, その他, のいずれかで返却する様にしてください。
 ''';
 
     final response = await geminiApiClient.fetchGeminiAnswer(prompt: prompt);

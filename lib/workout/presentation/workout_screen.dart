@@ -13,7 +13,7 @@ class WorkoutScreen extends HookConsumerWidget {
     required this.strength,
   });
 
-  final TrainPart trainPart;
+  final List<TrainPart> trainPart;
   final String trainTime;
   final String fatigue;
   final String strength;

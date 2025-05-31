@@ -17,7 +17,7 @@ class CreateTrainingMenuUseCase {
   final CreateMenuRepository repository;
 
   Future<List<TrainingMenu>> createMenu({
-    required TrainPart trainPart,
+    required List<TrainPart> trainPart,
     required String trainTime,
     required String strength,
     required String fatigue,
@@ -30,7 +30,6 @@ class CreateTrainingMenuUseCase {
     );
     final trainingMenus = convertGeminiResponseToTrainingMenu(
       geminiResponse.candidates[0].content.parts[0].text,
-      trainPart,
     );
     return trainingMenus;
   }

@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:train_menu_creator/app/router/route_names.dart';
-import 'package:train_menu_creator/create/domain/enums/train_part_enum.dart';
 
-class SelectTrainPartButton extends StatelessWidget {
+class SelectMenuButton extends StatelessWidget {
   final String text;
-  final TrainPart trainPart;
+  final String routeName;
 
-  const SelectTrainPartButton({
+  const SelectMenuButton({
     super.key,
     required this.text,
-    required this.trainPart,
+    required this.routeName,
   });
 
   @override
@@ -18,7 +16,7 @@ class SelectTrainPartButton extends StatelessWidget {
     return Column(
       children: [
         TextButton(
-          onPressed: () => context.go(RouteNames.createMenu, extra: trainPart),
+          onPressed: () => context.go(routeName),
           child: Text(text, style: TextStyle(fontSize: 36)),
         ),
       ],

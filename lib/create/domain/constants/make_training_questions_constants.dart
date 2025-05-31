@@ -3,6 +3,10 @@ import 'package:train_menu_creator/create/domain/entity/create_training_question
 const questionsAndAnswers = [
   CreateTrainingQuestionAndAnswers(
     question: '今日のトレーニング時間を教えてください！',
+    answers: [],
+  ),
+  CreateTrainingQuestionAndAnswers(
+    question: '今日のトレーニング時間を教えてください！',
     answers: ['1時間', '1時間半', '2時間', '2時間以上'],
   ),
   CreateTrainingQuestionAndAnswers(

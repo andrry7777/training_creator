@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:train_menu_creator/create/domain/enums/train_part_enum.dart';
+import 'package:train_menu_creator/app/router/route_names.dart';
 import 'package:train_menu_creator/create/presentation/widgets/train_option_button.dart';
 
-class SelectPartScreen extends StatelessWidget {
-  const SelectPartScreen({super.key});
+class SelectMenuScreen extends StatelessWidget {
+  const SelectMenuScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +16,10 @@ class SelectPartScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(height: 32),
-              SelectTrainPartButton(text: '胸', trainPart: TrainPart.chest),
-              SelectTrainPartButton(text: '肩', trainPart: TrainPart.shoulder),
-              SelectTrainPartButton(text: '足', trainPart: TrainPart.legs),
-              SelectTrainPartButton(text: '背中', trainPart: TrainPart.back),
-              SelectTrainPartButton(text: '腕', trainPart: TrainPart.arms),
+              SelectMenuButton(
+                routeName: RouteNames.createMenu,
+                text: '筋トレメニュー作成',
+              ),
             ],
           ),
         ),

@@ -7,19 +7,18 @@ import 'package:train_menu_creator/workout/presentation/workout_screen.dart';
 
 final myAppRouter = GoRouter(
   routes: [
-    GoRoute(path: '/', builder: (_, __) => const SelectPartScreen()),
+    GoRoute(path: '/', builder: (_, __) => const SelectMenuScreen()),
     GoRoute(
       path: RouteNames.createMenu,
       builder: (context, state) {
-        final args = state.extra as TrainPart?;
-        return QuestionPage(trainPart: args ?? TrainPart.other);
+        return QuestionPage();
       },
     ),
     GoRoute(
       path: RouteNames.workout,
       builder: (context, state) {
         final argsMap = state.extra as Map<String, dynamic>;
-        final trainPart = argsMap['trainPart'] as TrainPart;
+        final trainPart = argsMap['trainPart'] as List<TrainPart>;
         final trainTime = argsMap['trainTime'] as String;
         final strength = argsMap['strength'] as String;
         final fatigue = argsMap['fatigue'] as String;

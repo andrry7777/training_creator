@@ -19,10 +19,7 @@ class TrainingMenu with _$TrainingMenu {
 }
 
 /// Geminiから来た値をentityに変換するヘルパー
-List<TrainingMenu> convertGeminiResponseToTrainingMenu(
-  String geminiResponse,
-  TrainPart trainPart,
-) {
+List<TrainingMenu> convertGeminiResponseToTrainingMenu(String geminiResponse) {
   // レスポンスから不要な文字列を削除
   final cleaned = geminiResponse
       .replaceAll('\n', '')
@@ -36,6 +33,11 @@ List<TrainingMenu> convertGeminiResponseToTrainingMenu(
     final rest = item['rest'] as int?;
     final weight = item['weight'] as int?;
     final reps = item['reps'] as int?;
+    final trainPartString =
+        item['part'] as String? ?? TrainPart.other.getStringName;
+    final trainPart = TrainPart.values.firstWhere(
+      (e) => e.getStringName == trainPartString,
+    );
     return TrainingMenu(
       trainPart: trainPart,
       menu: menu ?? '',
