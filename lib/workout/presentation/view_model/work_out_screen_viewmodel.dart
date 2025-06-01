@@ -26,11 +26,15 @@ class WorkOutScreenState with _$WorkOutScreenState {
 }
 
 class WorkOutViewModel extends StateNotifier<WorkOutScreenState> {
-  WorkOutViewModel({required this.createUseCase, required this.workOutUseCase})
-    : super(const WorkOutScreenState());
+  WorkOutViewModel({
+    required CreateTrainingMenuUseCase createUseCase,
+    required WorkOutUseCase workOutUseCase,
+  }) : _workOutUseCase = workOutUseCase,
+       _createUseCase = createUseCase,
+       super(const WorkOutScreenState());
 
-  final CreateTrainingMenuUseCase createUseCase;
-  final WorkOutUseCase workOutUseCase;
+  final CreateTrainingMenuUseCase _createUseCase;
+  final WorkOutUseCase _workOutUseCase;
 
   void createMenu({
     required List<TrainPart> trainPart,
@@ -39,7 +43,7 @@ class WorkOutViewModel extends StateNotifier<WorkOutScreenState> {
     required String fatigue,
   }) async {
     state = state.copyWith(remainMenu: AsyncValue.loading());
-    final result = await createUseCase.createMenu(
+    final result = await _createUseCase.createMenu(
       trainPart: trainPart,
       trainTime: trainTime,
       strength: strength,
@@ -49,7 +53,7 @@ class WorkOutViewModel extends StateNotifier<WorkOutScreenState> {
   }
 
   void setMenuAsDone({required String id}) {
-    final remain = workOutUseCase.markTrainingDone(
+    final remain = _workOutUseCase.markTrainingDone(
       id: id,
       trainingMenus: state.remainMenu,
     );

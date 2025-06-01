@@ -3,6 +3,7 @@ import 'package:train_menu_creator/app/router/route_names.dart';
 import 'package:train_menu_creator/create/domain/enums/train_part_enum.dart';
 import 'package:train_menu_creator/create/presentation/pages/make_training_menu_screen.dart';
 import 'package:train_menu_creator/create/presentation/pages/select_part_screen.dart';
+import 'package:train_menu_creator/create/presentation/pages/settings_screen.dart';
 import 'package:train_menu_creator/workout/presentation/workout_screen.dart';
 
 final myAppRouter = GoRouter(
@@ -29,6 +30,10 @@ final myAppRouter = GoRouter(
           fatigue: fatigue,
         );
       },
+    ),
+    GoRoute(
+      path: RouteNames.settings,
+      builder: (context, stata) => FitnessSettings(),
     ),
   ],
 );

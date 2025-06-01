@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:train_menu_creator/create//infrastructure/api_client/gemini_api_client.dart';
+import 'package:train_menu_creator/create/domain/entity/user_settings.dart';
 import 'package:train_menu_creator/create/domain/enums/train_part_enum.dart';
 import 'package:train_menu_creator/create/domain/repositoryies/interface_create_menu_repository.dart';
 import 'package:train_menu_creator/create/infrastructure/model/gemini_response.dart';
@@ -20,8 +22,8 @@ class TrainingMenuRepositoryImpl implements CreateMenuRepository {
     required String trainTime,
     required String strength,
     required String fatigue,
+    required UserSettings settings,
   }) async {
-    // TODO 年齢などの情報も受け取れる様にしておく
     final prompt = '''
 あなたは優秀なパーソナルトレーナーです。
 以下の条件に合った本日のトレーニングメニューを提案してください。
@@ -30,10 +32,15 @@ class TrainingMenuRepositoryImpl implements CreateMenuRepository {
 強度：$strength
 トレーニング時間：$trainTime
 コンディション：$fatigue
-トレーニング歴：三年
-性別：男
-年齢：24
-体重：80
+トレーニングの目的：${settings.objection}
+トレーニング歴：${settings.intensity}
+トレーニング環境：${settings.trainingEnvironment}
+トレーニング頻度：${settings.often}
+
+性別：${settings.sex}
+年齢：${settings.age}
+体重：${settings.weight}
+身長：${settings.height}
 
 レスポンスの形式は  
 [
@@ -72,7 +79,7 @@ class TrainingMenuRepositoryImpl implements CreateMenuRepository {
 ・最後のオブジェクトの末尾には,は不要です
 ・トレーニング部位に関しては 胸, 肩, 脚, 背中, 腕, その他, のいずれかで返却する様にしてください。
 ''';
-
+    debugPrint(prompt);
     final response = await geminiApiClient.fetchGeminiAnswer(prompt: prompt);
 
     return response;
