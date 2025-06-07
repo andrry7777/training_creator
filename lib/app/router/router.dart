@@ -23,7 +23,7 @@ final myAppRouter = GoRouter(
         final trainTime = argsMap['trainTime'] as String;
         final strength = argsMap['strength'] as String;
         final fatigue = argsMap['fatigue'] as String;
-        return WorkoutScreen(
+        return WorkoutApp(
           trainPart: trainPart,
           trainTime: trainTime,
           strength: strength,

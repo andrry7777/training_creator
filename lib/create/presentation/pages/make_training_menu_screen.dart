@@ -41,14 +41,9 @@ class QuestionPage extends HookConsumerWidget {
     }
 
     return Scaffold(
+      backgroundColor: Colors.grey.shade900,
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFFFAF3E0), Color(0xFFFFE0B2)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+        color: Colors.grey.shade900,
         child: SafeArea(
           child: Column(
             children: [
@@ -61,8 +56,8 @@ class QuestionPage extends HookConsumerWidget {
                     value:
                         (currentIndex.value + 1) / questionsAndAnswers.length,
                     minHeight: 10,
-                    backgroundColor: Colors.grey.shade300,
-                    valueColor: const AlwaysStoppedAnimation(Colors.deepOrange),
+                    backgroundColor: Colors.grey.shade700,
+                    valueColor: AlwaysStoppedAnimation(Colors.orange.shade500),
                   ),
                 ),
               ),
@@ -129,58 +124,69 @@ class _QuestionContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        children: [
-          const Spacer(),
-          Text(
-            '質問 ${currentIndex + 1} / ${questionsAndAnswers.length}',
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 24),
-          Container(
-            padding: const EdgeInsets.all(28),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(24),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 12,
-                  offset: Offset(0, 6),
-                ),
-              ],
-            ),
-            child: Text(
-              qa.question,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
-            ),
-          ),
-          const SizedBox(height: 32),
-          isTrainPartPage
-              ? _TrainPartSelector(selected: trainPart, onTap: onPartToggle)
-              : _AnswerList(answers: qa.answers, onTap: onAnswer),
-          const SizedBox(height: 24),
-          if (isTrainPartPage)
-            ElevatedButton(
-              onPressed: trainPart.isNotEmpty ? () => onAnswer('') : null,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepOrange,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 32,
-                  vertical: 16,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24),
+    return Scaffold(
+      backgroundColor: Colors.grey.shade900,
+      appBar: AppBar(
+        backgroundColor: Colors.grey.shade800,
+        title: Text(
+          '質問 ${currentIndex + 1} / ${questionsAndAnswers.length}',
+          style: const TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+        elevation: 0,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          children: [
+            const Spacer(),
+            Container(
+              padding: const EdgeInsets.all(28),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade800,
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 12,
+                    offset: Offset(0, 6),
+                  ),
+                ],
+              ),
+              child: Text(
+                qa.question,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
                 ),
               ),
-              child: const Text('次へ', style: TextStyle(fontSize: 16)),
             ),
-          const Spacer(),
-        ],
+            const SizedBox(height: 32),
+            isTrainPartPage
+                ? _TrainPartSelector(selected: trainPart, onTap: onPartToggle)
+                : _AnswerList(answers: qa.answers, onTap: onAnswer),
+            const SizedBox(height: 24),
+            if (isTrainPartPage)
+              ElevatedButton(
+                onPressed: trainPart.isNotEmpty ? () => onAnswer('') : null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange.shade500,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 16,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                ),
+                child: const Text('次へ', style: TextStyle(fontSize: 16)),
+              ),
+            const Spacer(),
+          ],
+        ),
       ),
     );
   }
@@ -246,7 +252,7 @@ class _AnswerButton extends StatelessWidget {
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.white,
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: Colors.orange.shade500,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         elevation: 6,
@@ -274,7 +280,7 @@ class _SelectableAnswerButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.white,
         backgroundColor:
-            isSelected ? Colors.orange.shade700 : Colors.deepOrange,
+            isSelected ? Colors.orange.shade500 : Colors.grey.shade700,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         elevation: 6,

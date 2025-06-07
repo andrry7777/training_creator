@@ -27,6 +27,7 @@ class SettingsOfCreateMenuRepositoryImpl
     final height = sharedPreferences.getString('height') ?? '170';
     final weight = sharedPreferences.getString('weight') ?? '60';
     final gender = sharedPreferences.getString('gender') ?? 'male';
+    final intensity = sharedPreferences.getString('intensity') ?? '中級者';
     final trainingEnvironment =
         sharedPreferences.getString('trainingEnvironment') ?? 'ジム';
     final objection = sharedPreferences.getString('objection') ?? '筋力増強';
@@ -37,6 +38,7 @@ class SettingsOfCreateMenuRepositoryImpl
       height: height,
       weight: weight,
       sex: gender,
+      intensity: intensity,
       trainingEnvironment: trainingEnvironment,
       objection: objection,
       often: often,
