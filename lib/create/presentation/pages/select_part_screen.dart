@@ -21,6 +21,7 @@ class SelectMenuScreen extends StatelessWidget {
                 text: '筋トレメニュー作成',
               ),
               SelectMenuButton(routeName: RouteNames.settings, text: '作成設定'),
+              SelectMenuButton(routeName: RouteNames.home, text: 'home'),
             ],
           ),
         ),

@@ -4,6 +4,7 @@ import 'package:train_menu_creator/create/domain/enums/train_part_enum.dart';
 import 'package:train_menu_creator/create/presentation/pages/make_training_menu_screen.dart';
 import 'package:train_menu_creator/create/presentation/pages/select_part_screen.dart';
 import 'package:train_menu_creator/create/presentation/pages/settings_screen.dart';
+import 'package:train_menu_creator/home/presentation/home_screen.dart';
 import 'package:train_menu_creator/workout/presentation/workout_screen.dart';
 
 final myAppRouter = GoRouter(
@@ -34,6 +35,10 @@ final myAppRouter = GoRouter(
     GoRoute(
       path: RouteNames.settings,
       builder: (context, stata) => FitnessSettings(),
+    ),
+    GoRoute(
+      path: RouteNames.home,
+      builder: (context, stata) => TrainingHomeScreen(),
     ),
   ],
 );

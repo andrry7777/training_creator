@@ -47,6 +47,7 @@ class TrainingMenuRepositoryImpl implements CreateMenuRepository {
 {
  "part": "トレーニング部位",
  "menu": "トレーニングメニュー名",
+ "advice": "トレーニング実施におけるアドバイス",
  "rest": 休憩時間,
  "weight": トレーニング重量,
  "reps": トレーニング回数
@@ -54,6 +55,7 @@ class TrainingMenuRepositoryImpl implements CreateMenuRepository {
 {
  "part": "トレーニング部位",
  "menu": "トレーニングメニュー名",
+ "advice": "トレーニング実施におけるアドバイス",
  "rest": 休憩時間,
  "weight": トレーニング重量,
  "reps": トレーニング回数
@@ -61,6 +63,7 @@ class TrainingMenuRepositoryImpl implements CreateMenuRepository {
 {
  "part": "トレーニング部位",
  "menu": "トレーニングメニュー名",
+ "advice": "トレーニング実施におけるアドバイス",
  "rest": 休憩時間,
  "weight": トレーニング重量,
  "reps": トレーニング回数

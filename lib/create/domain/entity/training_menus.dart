@@ -15,6 +15,7 @@ class TrainingMenu with _$TrainingMenu {
     required int weight,
     required int reps,
     @Default('') String id,
+    @Default('') String advice,
   }) = _TrainingMenu;
 }
 
@@ -33,6 +34,7 @@ List<TrainingMenu> convertGeminiResponseToTrainingMenu(String geminiResponse) {
     final rest = item['rest'] as int?;
     final weight = item['weight'] as int?;
     final reps = item['reps'] as int?;
+    final advice = item['advice'] as String?;
     final trainPartString =
         item['part'] as String? ?? TrainPart.other.getStringName;
     final trainPart = TrainPart.values.firstWhere(
@@ -44,6 +46,7 @@ List<TrainingMenu> convertGeminiResponseToTrainingMenu(String geminiResponse) {
       rest: rest ?? 60,
       weight: weight ?? 100,
       reps: reps ?? 10,
+      advice: advice ?? '',
       id: uuid.v4(),
     );
   }).toList();

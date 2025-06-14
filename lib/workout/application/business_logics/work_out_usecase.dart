@@ -47,4 +47,17 @@ class WorkOutUseCase {
     final box = await Hive.openBox<TrainingMenuForHive>('training_menu');
     box.add(trainingMenu);
   }
+
+  AsyncValue<List<TrainingMenu>> moveSameNamedMenusToEnd({
+    required String id,
+    required AsyncValue<List<TrainingMenu>> trainingMenus,
+  }) {
+    final menus = trainingMenus.value ?? [];
+    final target = menus.firstWhere((m) => m.id == id);
+    final name = target.menu;
+    final toMove = menus.where((m) => m.menu == name).toList();
+    final remaining = menus.where((m) => m.menu != name).toList();
+
+    return AsyncValue.data([...remaining, ...toMove]);
+  }
 }

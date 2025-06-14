@@ -20,6 +20,8 @@ mixin _$WorkOutScreenState {
   AsyncValue<List<TrainingMenu>> get remainMenu =>
       throw _privateConstructorUsedError;
   List<TrainingMenu> get resultToday => throw _privateConstructorUsedError;
+  bool get isResting => throw _privateConstructorUsedError;
+  int get currentIndex => throw _privateConstructorUsedError;
 
   /// Create a copy of WorkOutScreenState
   /// with the given fields replaced by the non-null parameter values.
@@ -38,6 +40,8 @@ abstract class $WorkOutScreenStateCopyWith<$Res> {
   $Res call({
     AsyncValue<List<TrainingMenu>> remainMenu,
     List<TrainingMenu> resultToday,
+    bool isResting,
+    int currentIndex,
   });
 }
 
@@ -55,7 +59,12 @@ class _$WorkOutScreenStateCopyWithImpl<$Res, $Val extends WorkOutScreenState>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? remainMenu = null, Object? resultToday = null}) {
+  $Res call({
+    Object? remainMenu = null,
+    Object? resultToday = null,
+    Object? isResting = null,
+    Object? currentIndex = null,
+  }) {
     return _then(
       _value.copyWith(
             remainMenu:
@@ -68,6 +77,16 @@ class _$WorkOutScreenStateCopyWithImpl<$Res, $Val extends WorkOutScreenState>
                     ? _value.resultToday
                     : resultToday // ignore: cast_nullable_to_non_nullable
                         as List<TrainingMenu>,
+            isResting:
+                null == isResting
+                    ? _value.isResting
+                    : isResting // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            currentIndex:
+                null == currentIndex
+                    ? _value.currentIndex
+                    : currentIndex // ignore: cast_nullable_to_non_nullable
+                        as int,
           )
           as $Val,
     );
@@ -86,6 +105,8 @@ abstract class _$$WorkOutScreenStateImplCopyWith<$Res>
   $Res call({
     AsyncValue<List<TrainingMenu>> remainMenu,
     List<TrainingMenu> resultToday,
+    bool isResting,
+    int currentIndex,
   });
 }
 
@@ -102,7 +123,12 @@ class __$$WorkOutScreenStateImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? remainMenu = null, Object? resultToday = null}) {
+  $Res call({
+    Object? remainMenu = null,
+    Object? resultToday = null,
+    Object? isResting = null,
+    Object? currentIndex = null,
+  }) {
     return _then(
       _$WorkOutScreenStateImpl(
         remainMenu:
@@ -115,6 +141,16 @@ class __$$WorkOutScreenStateImplCopyWithImpl<$Res>
                 ? _value._resultToday
                 : resultToday // ignore: cast_nullable_to_non_nullable
                     as List<TrainingMenu>,
+        isResting:
+            null == isResting
+                ? _value.isResting
+                : isResting // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        currentIndex:
+            null == currentIndex
+                ? _value.currentIndex
+                : currentIndex // ignore: cast_nullable_to_non_nullable
+                    as int,
       ),
     );
   }
@@ -126,6 +162,8 @@ class _$WorkOutScreenStateImpl implements _WorkOutScreenState {
   const _$WorkOutScreenStateImpl({
     this.remainMenu = const AsyncValue.data([]),
     final List<TrainingMenu> resultToday = const <TrainingMenu>[],
+    this.isResting = false,
+    this.currentIndex = 0,
   }) : _resultToday = resultToday;
 
   @override
@@ -141,8 +179,15 @@ class _$WorkOutScreenStateImpl implements _WorkOutScreenState {
   }
 
   @override
+  @JsonKey()
+  final bool isResting;
+  @override
+  @JsonKey()
+  final int currentIndex;
+
+  @override
   String toString() {
-    return 'WorkOutScreenState(remainMenu: $remainMenu, resultToday: $resultToday)';
+    return 'WorkOutScreenState(remainMenu: $remainMenu, resultToday: $resultToday, isResting: $isResting, currentIndex: $currentIndex)';
   }
 
   @override
@@ -155,7 +200,11 @@ class _$WorkOutScreenStateImpl implements _WorkOutScreenState {
             const DeepCollectionEquality().equals(
               other._resultToday,
               _resultToday,
-            ));
+            ) &&
+            (identical(other.isResting, isResting) ||
+                other.isResting == isResting) &&
+            (identical(other.currentIndex, currentIndex) ||
+                other.currentIndex == currentIndex));
   }
 
   @override
@@ -163,6 +212,8 @@ class _$WorkOutScreenStateImpl implements _WorkOutScreenState {
     runtimeType,
     remainMenu,
     const DeepCollectionEquality().hash(_resultToday),
+    isResting,
+    currentIndex,
   );
 
   /// Create a copy of WorkOutScreenState
@@ -181,12 +232,18 @@ abstract class _WorkOutScreenState implements WorkOutScreenState {
   const factory _WorkOutScreenState({
     final AsyncValue<List<TrainingMenu>> remainMenu,
     final List<TrainingMenu> resultToday,
+    final bool isResting,
+    final int currentIndex,
   }) = _$WorkOutScreenStateImpl;
 
   @override
   AsyncValue<List<TrainingMenu>> get remainMenu;
   @override
   List<TrainingMenu> get resultToday;
+  @override
+  bool get isResting;
+  @override
+  int get currentIndex;
 
   /// Create a copy of WorkOutScreenState
   /// with the given fields replaced by the non-null parameter values.

@@ -41,9 +41,15 @@ class QuestionPage extends HookConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade900,
+      backgroundColor: Colors.transparent,
       body: Container(
-        color: Colors.grey.shade900,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFF1B2730), Color(0xFF0F2A3F)],
+          ),
+        ),
         child: SafeArea(
           child: Column(
             children: [
@@ -125,9 +131,9 @@ class _QuestionContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade900,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
-        backgroundColor: Colors.grey.shade800,
+        backgroundColor: Colors.transparent,
         title: Text(
           '質問 ${currentIndex + 1} / ${questionsAndAnswers.length}',
           style: const TextStyle(color: Colors.white),
@@ -135,57 +141,67 @@ class _QuestionContent extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          children: [
-            const Spacer(),
-            Container(
-              padding: const EdgeInsets.all(28),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade800,
-                borderRadius: BorderRadius.circular(24),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 12,
-                    offset: Offset(0, 6),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFF1B2730), Color(0xFF0F2A3F)],
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            children: [
+              const Spacer(),
+              Container(
+                padding: const EdgeInsets.all(28),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF2C2F36),
+                  borderRadius: BorderRadius.circular(24),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 12,
+                      offset: Offset(0, 6),
+                    ),
+                  ],
+                ),
+                child: Text(
+                  qa.question,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
                   ),
-                ],
-              ),
-              child: Text(
-                qa.question,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
                 ),
               ),
-            ),
-            const SizedBox(height: 32),
-            isTrainPartPage
-                ? _TrainPartSelector(selected: trainPart, onTap: onPartToggle)
-                : _AnswerList(answers: qa.answers, onTap: onAnswer),
-            const SizedBox(height: 24),
-            if (isTrainPartPage)
-              ElevatedButton(
-                onPressed: trainPart.isNotEmpty ? () => onAnswer('') : null,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange.shade500,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 16,
+              const SizedBox(height: 32),
+              isTrainPartPage
+                  ? _TrainPartSelector(selected: trainPart, onTap: onPartToggle)
+                  : _AnswerList(answers: qa.answers, onTap: onAnswer),
+              const SizedBox(height: 24),
+              if (isTrainPartPage)
+                ElevatedButton(
+                  onPressed: trainPart.isNotEmpty ? () => onAnswer('') : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFFA8C16),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32,
+                      vertical: 16,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    elevation: 4,
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24),
-                  ),
+                  child: const Text('次へ', style: TextStyle(fontSize: 16)),
                 ),
-                child: const Text('次へ', style: TextStyle(fontSize: 16)),
-              ),
-            const Spacer(),
-          ],
+              const Spacer(),
+            ],
+          ),
         ),
       ),
     );
@@ -252,10 +268,11 @@ class _AnswerButton extends StatelessWidget {
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.white,
-        backgroundColor: Colors.orange.shade500,
+        backgroundColor: const Color(0xFFFA8C16),
+        shadowColor: Colors.black54,
+        elevation: 4,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        elevation: 6,
       ),
       child: Text(text, style: const TextStyle(fontSize: 16)),
     );
@@ -280,10 +297,11 @@ class _SelectableAnswerButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.white,
         backgroundColor:
-            isSelected ? Colors.orange.shade500 : Colors.grey.shade700,
+            isSelected ? const Color(0xFFFA8C16) : Colors.grey.shade700,
+        shadowColor: Colors.black54,
+        elevation: 4,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        elevation: 6,
       ),
       child: Text(text, style: const TextStyle(fontSize: 16)),
     );
