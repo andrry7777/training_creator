@@ -1,4 +1,4 @@
-package com.example.train_menu_creator
+package com.creator.training
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,6 +1,6 @@
 # train_menu_creator
 
-A new Flutter project.
+筋トレメニューを自動生成することを目的としたアプリケーションです
 
 ## Getting Started
 

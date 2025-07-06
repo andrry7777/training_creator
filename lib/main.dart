@@ -1,122 +1,254 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:train_menu_creator/create/domain/entity/training_menus_for_hive.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'app/router/router.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: '.env');
+  final appDocumentDir = await getApplicationDocumentsDirectory();
+  Hive.init(appDocumentDir.path);
+  Hive.registerAdapter(TrainingMenuForHiveAdapter());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    const primaryColor = Color(0xFFFF5722); // Deep Orange 500
+    const secondaryColor = Color(0xFFFFEB3B); // Yellow 500
+    const onPrimaryColor = Colors.white;
+    const onSecondaryColor = Color(0xFF212121);
+    const surfaceColor = Color(0xFFFFF3E0);
+    const backgroundColor = Colors.white;
+    const onSurfaceAndBackgroundColor = Color(0xFF212121); // テキストの基本色
+    const errorColor = Color(0xFFD32F2F);
+
+    return MaterialApp.router(
+      title: 'Training Creator',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: primaryColor,
+          brightness: Brightness.light,
+          primary: primaryColor,
+          onPrimary: onPrimaryColor,
+          secondary: secondaryColor,
+          onSecondary: onSecondaryColor,
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+          surface: surfaceColor,
+          onSurface: onSurfaceAndBackgroundColor,
+          error: errorColor,
+          onError: Colors.white,
+        ),
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
+        scaffoldBackgroundColor: backgroundColor,
 
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+        appBarTheme: AppBarTheme(
+          backgroundColor: primaryColor,
+          foregroundColor: onPrimaryColor,
+          elevation: 2,
+          centerTitle: true,
+          titleTextStyle: const TextStyle(
+            fontFamily: 'sans-serif',
+            color: onPrimaryColor,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 0.5,
+          ),
+          iconTheme: const IconThemeData(color: onPrimaryColor, size: 26),
+        ),
 
-  final String title;
+        textTheme: TextTheme(
+          headlineLarge: TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            color: onSurfaceAndBackgroundColor,
+            letterSpacing: 0.2,
+          ),
+          headlineMedium: TextStyle(
+            fontSize: 26,
+            fontWeight: FontWeight.bold,
+            color: onSurfaceAndBackgroundColor,
+            letterSpacing: 0.2,
+          ),
+          headlineSmall: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: onSurfaceAndBackgroundColor,
+            letterSpacing: 0.1,
+          ),
+          titleLarge: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: onSurfaceAndBackgroundColor,
+          ),
+          titleMedium: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: onSurfaceAndBackgroundColor,
+          ),
+          titleSmall: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: onSurfaceAndBackgroundColor,
+          ),
+          bodyLarge: TextStyle(
+            fontSize: 16,
+            color: onSurfaceAndBackgroundColor.withValues(alpha: 0.85),
+            height: 1.5,
+          ),
+          bodyMedium: TextStyle(
+            fontSize: 14,
+            color: onSurfaceAndBackgroundColor.withValues(alpha: 0.85),
+            height: 1.4,
+          ),
+          bodySmall: TextStyle(
+            fontSize: 12,
+            color: onSurfaceAndBackgroundColor.withValues(alpha: 0.60),
+            height: 1.3,
+          ),
+          labelLarge: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: onPrimaryColor,
+            letterSpacing: 0.5,
+          ),
+          // ElevatedButtonのテキスト
+          labelMedium: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            color: onSurfaceAndBackgroundColor.withValues(alpha: 0.7),
+          ),
+        ),
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: primaryColor,
+            foregroundColor: onPrimaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
             ),
-          ],
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+            textStyle: const TextStyle(
+              // labelLarge が使われることが多いが、明示的に指定
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0.5,
+              color: onPrimaryColor, // 明示的に色を指定
+            ),
+            elevation: 3,
+          ),
+        ),
+
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            foregroundColor: primaryColor,
+            textStyle: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            foregroundColor: primaryColor,
+            side: const BorderSide(color: primaryColor, width: 2),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+            textStyle: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0.5,
+            ),
+          ),
+        ),
+
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: surfaceColor.withValues(alpha: 0.8),
+          // 少し透明度を持たせるか、別のはっきりした色
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.0),
+            borderSide: BorderSide.none,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.0),
+            borderSide: BorderSide(color: Colors.grey[300]!, width: 1.5),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.0),
+            borderSide: const BorderSide(color: primaryColor, width: 2.0),
+          ),
+          labelStyle: TextStyle(
+            color: onSurfaceAndBackgroundColor.withValues(alpha: 0.7),
+            fontSize: 16,
+          ),
+          hintStyle: TextStyle(
+            color: onSurfaceAndBackgroundColor.withValues(alpha: 0.5),
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 16,
+          ),
+        ),
+
+        cardTheme: CardTheme(
+          elevation: 2, // 少し抑えめの影
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          color: surfaceColor,
+        ),
+
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: secondaryColor, // アクセントカラー
+          foregroundColor: onSecondaryColor,
+          elevation: 4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(28)),
+          ),
+        ),
+
+        iconTheme: IconThemeData(
+          color: onSurfaceAndBackgroundColor.withValues(alpha: 0.8),
+          size: 24,
+        ),
+
+        progressIndicatorTheme: ProgressIndicatorThemeData(
+          color: primaryColor,
+          linearTrackColor: Colors.grey[300],
+          circularTrackColor: Colors.grey[300],
+        ),
+
+        tabBarTheme: TabBarTheme(
+          labelColor: primaryColor,
+          unselectedLabelColor: onSurfaceAndBackgroundColor.withValues(
+            alpha: 0.7,
+          ),
+          indicatorColor: primaryColor,
+          labelStyle: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+          unselectedLabelStyle: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      routerConfig: myAppRouter,
     );
   }
 }

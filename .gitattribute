@@ -1,0 +1,4 @@
+# === Dart 自動生成ファイル: 差分を無視 ===
+*.g.dart -diff
+*.freezed.dart -diff
+*.mock.dart -diff
